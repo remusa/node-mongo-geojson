@@ -12,9 +12,8 @@ dotenv.config({
 
 const PORT = process.env.PORT || 8000
 const ENV: string = process.env.NODE_ENV || 'development'
-const DB_URL: string = process.env.DB_URL || ''
 
-connectDB(DB_URL)
+connectDB()
 
 const app: express.Application = express()
 

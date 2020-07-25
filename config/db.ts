@@ -1,6 +1,13 @@
 import mongoose, { Mongoose } from 'mongoose'
+import dotenv from 'dotenv'
 
-const connectDB = async (DB_URL: string) => {
+dotenv.config({
+  path: './config/.env.dev',
+})
+
+const DB_URL: string = process.env.DB_URL || ''
+
+const connectDB = async () => {
   try {
     const conn: Mongoose = await mongoose.connect(DB_URL, {
       useNewUrlParser: true,

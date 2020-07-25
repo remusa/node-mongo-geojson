@@ -1,4 +1,6 @@
 import mongoose, { Schema, Model, Document } from 'mongoose'
+import { NextFunction } from 'express'
+import geocoder from '../utils/geocoder'
 
 interface IStore extends Document {
   storeId: string
@@ -42,6 +44,6 @@ const StoreSchema: Schema = new mongoose.Schema({
   },
 })
 
-const Store: Model<IStore> = mongoose.model('Store', StoreSchema)
 
-export default Store
+// Exports
+export const Store: Model<IStore> = mongoose.model('Store', StoreSchema)

@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express'
-import Store from '../../models/Store'
+import { Store } from '../../models/Store'
 
 // @desc Get all stores
 // @route GET /api/v1/stores
