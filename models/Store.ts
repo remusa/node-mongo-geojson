@@ -1,5 +1,4 @@
 import mongoose, { Schema, Model, Document } from 'mongoose'
-import { NextFunction } from 'express'
 import geocoder from '../utils/geocoder'
 
 interface IStore extends Document {
@@ -44,6 +43,22 @@ const StoreSchema: Schema = new mongoose.Schema({
   },
 })
 
+// Geocode & create location
+StoreSchema.pre('save', async function (next: mongoose.HookNextFunction) {
+  const loc = await geocoder.geocode(this.get('address'))
+
+  this.set({
+    location: {
+      type: 'Point',
+      coordinates: [loc[0].longitude, loc[0].latitude],
+      formattedAddress: loc[0].formattedAddress,
+    },
+    // Don't save address
+    address: undefined,
+  })
+
+  next()
+})
 
 // Exports
 export const Store: Model<IStore> = mongoose.model('Store', StoreSchema)

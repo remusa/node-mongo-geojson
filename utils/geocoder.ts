@@ -6,8 +6,7 @@ dotenv.config({
 })
 
 const GEOCODER_PROVIDER = process.env.GEOCODER_PROVIDER
-const GEOCODER_KEY = process.env.MAPQUEST_KEY
-const GEOCODER_SECRET = process.env.MAPQUEST_SECRET
+const GEOCODER_API_KEY = process.env.GEOCODER_API_KEY
 
 // https://github.com/nchaulet/node-geocoder
 const options: NodeGeocoder.Options = {
@@ -17,7 +16,7 @@ const options: NodeGeocoder.Options = {
   // Optional depending on the providers
   httpAdapter: 'https', // Default
   // fetch: customFetchImplementation,
-  apiKey: GEOCODER_KEY, // for Mapquest, OpenCage, Google Premier
+  apiKey: GEOCODER_API_KEY, // for Mapquest, OpenCage, Google Premier
   formatter: null, // 'gpx', 'string', ...
 }
 
