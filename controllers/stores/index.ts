@@ -14,7 +14,7 @@ const getStores = () => async (req: Request, res: Response, next: NextFunction) 
       data: stores,
     })
   } catch (err) {
-    console.error(err)
+    console.error(`Error getting stores: ${err.message}`)
     res.status(500).json({
       error: 'Server error',
     })
@@ -33,7 +33,7 @@ const postStore = () => async (req: Request, res: Response, next: NextFunction) 
       data: store,
     })
   } catch (err) {
-    console.error(err)
+    console.error(`Error posting store: ${err.message}`)
 
     if (err.code === 11000) {
       return res.status(400).json({
