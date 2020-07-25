@@ -1,5 +1,5 @@
 {
-  "name": "node-geojson-store",
+  "name": "node-mongo-geojson",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -23,12 +23,7 @@
     "test:coverage": "jest --coverage",
     "test:watch": "jest --watch",
     "test:debug": "node --inspect-brk ./node_modules/jest/bin/jest.js --runInBand --watch",
-    "upgrade-interactive": "npm-check --update",
-    "db:makemigrations": "knex migrate:make todo",
-    "db:migrate": "knex migrate:latest",
-    "db:unmigrate": "knex migrate:rollback",
-    "db:makeseed": "knex seed:make todo",
-    "db:seed": "knex seed:run"
+    "upgrade-interactive": "npm-check --update"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
