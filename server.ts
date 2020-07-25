@@ -4,14 +4,17 @@ import dotenv from 'dotenv'
 import express, { NextFunction, Request, Response } from 'express'
 import helmet from 'helmet'
 import storesRoutes from './routes/stores'
+import connectDB from './config/db'
 
 dotenv.config({
-  path: './config/config.env',
+  path: './config/.env.dev',
 })
 
 const PORT = process.env.PORT || 8000
-const ENV = process.env.NODE_ENV || 'development'
-const DB_URL = process.env.DATABASE_URL
+const ENV: string = process.env.NODE_ENV || 'development'
+const DB_URL: string = process.env.DB_URL || ''
+
+connectDB(DB_URL)
 
 const app: express.Application = express()
 
