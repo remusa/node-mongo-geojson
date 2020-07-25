@@ -10,7 +10,40 @@ const map = new mapboxgl.Map({
   center: [-71.157895, 42.707741],
 })
 
-function loadMap() {
+// Fetch stores from API
+const ENDPOINT = '/api/v1/stores'
+
+async function getStores() {
+  const res = await fetch(ENDPOINT).catch(e => console.error(`Error fetching stores: ${e.message}`))
+
+  if (res) {
+    const data = await res.json()
+
+    const stores = data.data.map(store => {
+      const {
+        storeId,
+        location: { coordinates },
+      } = store
+
+      return {
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: [coordinates[0], coordinates[1]],
+        },
+        properties: {
+          storeId: storeId,
+          icon: 'shop',
+        },
+      }
+    })
+
+    loadMap(stores)
+  }
+}
+
+// Load map with stores
+function loadMap(stores) {
   map.on('load', function () {
     map.addLayer({
       id: 'points',
@@ -19,17 +52,7 @@ function loadMap() {
         type: 'geojson',
         data: {
           type: 'FeatureCollection',
-          features: {
-            type: 'Feature',
-            geometry: {
-              type: 'Point',
-              coordinates: [-71.157895, 42.707741],
-            },
-            properties: {
-              storeId: '0001',
-              icon: 'shop',
-            },
-          },
+          features: stores,
         },
       },
       layout: {
@@ -43,3 +66,5 @@ function loadMap() {
     })
   })
 }
+
+getStores()
