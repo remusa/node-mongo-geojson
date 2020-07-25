@@ -3,12 +3,11 @@ GET http://localhost:8000/api/v1/stores HTTP/1.1
 ###
 
 POST http://localhost:8000/api/v1/stores HTTP/1.1
-content-type: application/json
+Content-Type: application/json
 
 {
-	"email": "test@test.com",
-	"password": "password123"
+	"storeId": "0001",
+	"address": "10 Main St. Haverhill"
 }
-
 
 ###

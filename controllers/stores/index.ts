@@ -21,6 +21,30 @@ const getStores = () => async (req: Request, res: Response, next: NextFunction) 
   }
 }
 
+// @desc Create a store
+// @route POST /api/v1/stores
+// @access Public
+const postStore = () => async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const store = await Store.create(req.body)
 
+    return res.status(201).json({
+      success: true,
+      data: store,
+    })
+  } catch (err) {
+    console.error(err)
 
-export { getStores, postStore  }
+    if (err.code === 11000) {
+      return res.status(400).json({
+        error: 'Store already exists',
+      })
+    }
+
+    res.status(500).json({
+      error: `Server error: ${err.message}`,
+    })
+  }
+}
+
+export { getStores, postStore }
