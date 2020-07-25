@@ -11,9 +11,10 @@ const map = new mapboxgl.Map({
 })
 
 // Fetch stores from API
-const ENDPOINT = '/api/v1/stores'
 
 async function getStores() {
+  const ENDPOINT = '/api/v1/stores'
+
   const res = await fetch(ENDPOINT).catch(e => console.error(`Error fetching stores: ${e.message}`))
 
   if (res) {
