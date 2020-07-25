@@ -1,10 +1,11 @@
 import bodyParser from 'body-parser'
 import cors from 'cors'
 import dotenv from 'dotenv'
-import express, { NextFunction, Request, Response } from 'express'
+import express, { Request, Response } from 'express'
 import helmet from 'helmet'
-import storesRoutes from './routes/stores'
+import path from 'path'
 import connectDB from './config/db'
+import storesRoutes from './routes/stores'
 
 dotenv.config({
   path: './config/.env.dev',
@@ -13,24 +14,30 @@ dotenv.config({
 const PORT = process.env.PORT || 8000
 const ENV: string = process.env.NODE_ENV || 'development'
 
+// Database
 connectDB()
 
+// App
 const app: express.Application = express()
 
 // Security
 app.use(helmet())
 app.disable('x-powered-by')
-// app.use(cors())
+app.use(cors())
 
 // Middleware
 app.use(express.json())
 app.use(bodyParser.json())
 
-// Routes
-app.get('/', (req: Request, res: Response, next: NextFunction) => {
-  res.send('Hello, world!')
-})
+// Static folder
+const PUBLIC = path.join(__dirname, 'public/')
+app.use(express.static(PUBLIC))
 
+// Routes
+app.get('/', (req: Request, res: Response) => res.sendFile(PUBLIC + 'index.html'))
+app.get('/add', (req: Request, res: Response) => res.sendFile(PUBLIC + 'add.html'))
+
+// API routes
 app.use('/api/v1/stores', storesRoutes)
 
 // Server
