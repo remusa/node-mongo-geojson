@@ -7,37 +7,37 @@ window.addEventListener('DOMContentLoaded', () => {
 
   storeForm.addEventListener('submit', addStore, false)
 
+  // Send POST to API to add store
   async function addStore(e) {
     e.preventDefault()
 
     if (storeId.value === '' || storeAddress.value === '') {
-      alert('Please fill in the required fields')
+      alert('Please fill in fields')
     }
 
-    const params = {
+    const sendBody = {
       storeId: storeId.value,
-      storeAddress: storeAddress.value,
+      address: storeAddress.value,
     }
 
-    const res = await fetch(ENDPOINT, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        body: JSON.stringify(params),
-      },
-    }).catch(e => {
-      alert(`Error adding store: ${e.message}`)
-      console.error(`Error adding store: ${e.message}`)
-      return
-    })
+    try {
+      const res = await fetch('/api/v1/stores', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(sendBody),
+      })
 
-    if (res) {
       if (res.status === 400) {
-        throw Error('Store already exists')
+        throw Error('Store already exists!')
       }
 
-      alert('Store added')
-      window.location.href = '/'
+      alert('Store added!')
+      window.location.href = '/index.html'
+    } catch (err) {
+      alert(err)
+      return
     }
   }
 })
