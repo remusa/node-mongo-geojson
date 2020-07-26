@@ -1,4 +1,3 @@
-import bodyParser from 'body-parser'
 import cors from 'cors'
 import dotenv from 'dotenv'
 import express, { Request, Response } from 'express'
@@ -27,7 +26,7 @@ app.use(cors())
 
 // Middleware
 app.use(express.json())
-app.use(bodyParser.json())
+app.use(express.urlencoded({ extended: true }))
 
 // Static folder
 const PUBLIC = path.join(__dirname, 'public/')
