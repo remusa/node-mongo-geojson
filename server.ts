@@ -16,7 +16,7 @@ const ENV: string = process.env.NODE_ENV || 'development'
 // Database
 connectDB()
 
-// App
+// Express
 const app: express.Application = express()
 
 // Security
@@ -25,16 +25,18 @@ app.disable('x-powered-by')
 app.use(cors())
 
 // Middleware
-app.use(express.json())
+app.use(express.json()) // body-parser
 app.use(express.urlencoded({ extended: true }))
 
 // Static folder
-const PUBLIC = path.join(__dirname, 'public/')
+const PUBLIC: string = path.join(__dirname, 'public/')
 app.use(express.static(PUBLIC))
 
 // Routes
-app.get('/', (req: Request, res: Response) => res.sendFile(PUBLIC + 'index.html'))
-app.get('/add', (req: Request, res: Response) => res.sendFile(PUBLIC + 'add.html'))
+const publicFile = (file: string): string => path.join(PUBLIC, file)
+
+app.get('/', (req: Request, res: Response) => res.sendFile(publicFile('index.html')))
+app.get('/add', (req: Request, res: Response) => res.sendFile(publicFile('add.html')))
 
 // API routes
 app.use('/api/v1/stores', storesRoutes)
