@@ -3,6 +3,7 @@ import { getStores, postStore } from '../../controllers/stores'
 
 const router: Router = express.Router()
 
-router.route('/').get(getStores()).post(postStore())
+router.route('/').get(getStores())
+router.route('/').post(postStore())
 
 export default router
